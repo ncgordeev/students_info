@@ -38,6 +38,9 @@ def get_student_by_pk(students_info) -> dict:
             return student
 
 
+student = get_student_by_pk(students)
+
+
 def get_professions_by_title(professions_info) -> dict:
     """
     Function getting data by title
@@ -48,5 +51,27 @@ def get_professions_by_title(professions_info) -> dict:
             return profession
 
 
+profession_ = get_professions_by_title(professions)
+
+
+def check_skills(student, profession) -> dict:
+    """
+    Function checking skills
+    :return:
+    """
+    student_skills = set(student["skills"])
+    profession_skills = set(profession["skills"])
+    matching_skills = list(student_skills.intersection(profession_skills))
+    diffident_skills = list(student_skills.difference(profession_skills))
+    compliance_percentage = int(len(matching_skills) / len(profession_skills) * 100)
+    matching = {
+        "has": matching_skills,
+        "lacks": diffident_skills,
+        "compliance_percent": compliance_percentage,
+    }
+    return matching
+
+
 print(get_student_by_pk(students))
 print(get_professions_by_title(professions))
+print(check_skills(student, profession_))
