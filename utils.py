@@ -1,5 +1,4 @@
 import json
-from config import PROF_DATA, STUD_DATA
 
 
 def load_students(filepath: str) -> list:
@@ -12,9 +11,6 @@ def load_students(filepath: str) -> list:
         return contents
 
 
-students = load_students(STUD_DATA)
-
-
 def load_professions(filepath: str) -> list:
     """
     Function loading data from professions.json
@@ -25,33 +21,24 @@ def load_professions(filepath: str) -> list:
         return contents
 
 
-professions = load_professions(PROF_DATA)
-
-
-def get_student_by_pk(students_info) -> dict:
+def get_student_by_pk(students_info: list, user_pk: int) -> dict:
     """
     Function getting data by pk
     :return: dict
     """
     for student in students_info:
-        if student["pk"] == 1:
+        if student["pk"] == user_pk:
             return student
 
 
-student = get_student_by_pk(students)
-
-
-def get_professions_by_title(professions_info) -> dict:
+def get_professions_by_title(professions_list: list, prof_name: str) -> dict:
     """
     Function getting data by title
     :return: dict
     """
-    for profession in professions_info:
-        if profession["title"] == "Backend":
+    for profession in professions_list:
+        if profession["title"] == prof_name:
             return profession
-
-
-profession_ = get_professions_by_title(professions)
 
 
 def check_skills(student, profession) -> dict:
@@ -70,8 +57,3 @@ def check_skills(student, profession) -> dict:
         "compliance_percent": compliance_percentage,
     }
     return matching
-
-
-print(get_student_by_pk(students))
-print(get_professions_by_title(professions))
-print(check_skills(student, profession_))
